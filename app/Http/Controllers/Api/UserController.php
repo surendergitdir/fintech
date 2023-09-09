@@ -32,7 +32,7 @@ class UserController extends Controller
             return response()->json(['message'=>'Bad Request','errors' => $validator->errors()],400); 
         }
         $user_type = 1;
-        if($request->type == 0){
+        if($request->type == '0' || $request->type == 0){
             $user_type = 0;
         }
         DB::beginTransaction();

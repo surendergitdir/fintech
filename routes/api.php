@@ -17,9 +17,11 @@ use App\Http\Middleware\XSS;
 */
 
 
-Route::post('user/register',[UserController::class,'create']);
-Route::post('user/login',[UserController::class,'login']);
 
+Route::group(['middleware' => ['throttle:20,1','XSS']], function(){
+    Route::post('user/register',[UserController::class,'create']);
+    Route::post('user/login',[UserController::class,'login']);
+});
 Route::group(['middleware' => ['throttle:20,1','XSS','auth:api']], function(){
     Route::post('user/logout',[UserController::class,'logout']);
     Route::post('txn/create',[TxnController::class,'store']);
